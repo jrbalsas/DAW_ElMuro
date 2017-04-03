@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h1>Muro de #{muro.userPrefs.identificador}</h1>
+    <h:dataTable id="mensajes" var="msg" value="#{muro.mensajes}">
+        <h:column>
+            #{msg.identificador}: #{msg.mensaje}
+        </h:column>
+    </h:dataTable>
+    <h:form>
+        <p><h:messages /></p>
+        <h:inputText p:placeholder="Mensaje" value="#{muro.mensaje.mensaje}"/> 
+        <h:commandButton value="Enviar" action="#{muro.enviaMensaje}"/>    
+    </h:form>
+</html>
+

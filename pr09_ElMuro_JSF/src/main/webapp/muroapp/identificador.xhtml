@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h1>Dime tu nombre</h1>
+        <h:form>
+            <label for="id"/>
+            <h:inputText id="identificador"
+                         value="#{muro.userPrefs.identificador}"/>
+            <h:message for="identificador"/><br/>
+            <h:commandButton value="enviar" action="#{muro.cambiaIdentificador}"/>
+        </h:form>
+    </h:body>
+</html>
+
