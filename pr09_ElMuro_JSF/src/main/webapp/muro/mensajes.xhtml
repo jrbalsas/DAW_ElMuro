@@ -15,7 +15,8 @@
     <h:form>
         <p><h:messages /></p>
         <h:inputText p:placeholder="Mensaje" value="#{muro.mensaje.mensaje}"/> 
-        <h:commandButton value="Enviar" action="#{muro.enviaMensaje}"/>    
+        <h:commandButton value="Enviar" action="#{muro.enviaMensaje}"/>
+        <h:link  outcome="identificador" value="Cambiar Identificador"/>
     </h:form>
 </html>
 

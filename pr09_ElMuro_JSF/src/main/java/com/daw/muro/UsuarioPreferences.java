@@ -1,4 +1,4 @@
-package com.daw.muro.model;
+package com.daw.muro;
 
 import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;
@@ -11,6 +11,7 @@ public class UsuarioPreferences implements Serializable{
     private String identificador;
 
     public UsuarioPreferences() {
+        identificador="";
     }
 
     public String getIdentificador() {

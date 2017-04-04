@@ -4,7 +4,7 @@ import com.daw.muro.Mensaje;
 import com.daw.muro.model.MensajeDAO;
 import com.daw.muro.model.MensajeDAOJdbcBean;
 import com.daw.muro.model.MensajeDAOListBean;
-import com.daw.muro.model.UsuarioPreferences;
+import com.daw.muro.UsuarioPreferences;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -31,10 +31,12 @@ public class Muro implements Serializable {
     private MensajeDAO mensajesDAO;
 
     public Muro() {
+        //DAO NOT available
     }
 
     @PostConstruct
     private void init() {
+        //DAO available (CDI completed)
         mensaje = new Mensaje();
         mensajes = null;
     }
