@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <title>Mensajes</title>
+    </head>
+    <body>
+        <h1>Muro de <span id="idIdentificador"></span></h1>
+        <h2>Mensajes</h2>
+        <ul id="idMensajes">
+            <!-- Mensajes del Muro-->
+        </ul>
+        <div id="idErrores" ><!--Mensajes de error--></div>
+        <form name="frmMensaje">
+            <input type="text" name="mensaje"  placeholder="Mensaje">
+            <input type="submit" name="Enviar">
+        </form>
+        <h2>Cambiar el identificador</h2>
+        <form name="frmIdentificador">
+            <input type="text" name="identificador"  placeholder="Identificador">
+            <input type="submit" name="Nuevo Identificador">
+        </form>
+        <!-- JS dependencies -->
+        <script src="//code.jquery.com/jquery-3.2.1.min.js" ></script>
+        <script src="js/muroController.js"></script>
+    </body>
+</html>
