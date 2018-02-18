@@ -14,6 +14,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 
@@ -21,17 +22,18 @@ import org.springframework.stereotype.Repository;
 @Repository("MensajeDAOJDBC")
 public class MensajeDAOJDBC implements MensajeDAO{
 
+    @Autowired
     private DataSource ds;
     
     public MensajeDAOJDBC ()  {
-        Context context;
-
-        try {
-            context = new InitialContext(); //Accedemos al contenedor de Servlets
-            ds = (DataSource) context.lookup("java:comp/env/jdbc/muro"); //Localizamos el pool
-        } catch (NamingException ex) {
-            Logger.getLogger(MensajeDAOJDBC.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        Context context;
+//
+//        try {
+//            context = new InitialContext(); //Accedemos al contenedor de Servlets
+//            ds = (DataSource) context.lookup("java:comp/env/jdbc/muro"); //Localizamos el pool
+//        } catch (NamingException ex) {
+//            Logger.getLogger(MensajeDAOJDBC.class.getName()).log(Level.SEVERE, null, ex);
+//        }
 
     }
     
