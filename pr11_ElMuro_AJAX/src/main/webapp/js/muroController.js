@@ -8,7 +8,7 @@ $(function () {
 //Muro Controller
 var muroCtrl = {
     config: {
-        srvUrl:  'webservices/muro'
+        srvUrl:  'webservice/muro'
     },
     viewModel: {
         identificador: "Desconocido"

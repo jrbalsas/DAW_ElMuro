@@ -5,20 +5,6 @@
             30
         </session-timeout>
     </session-config>
-<!-- JAXRS front controller declaration and routing -->
-<servlet>
-  <servlet-name>javax.ws.rs.core.Application</servlet-name>
-  <!-- Enable webservices to send BeanValidation error messages -->
-   <init-param>
-	<param-name>jersey.config.beanValidation.enableOutputValidationErrorEntity.server
-	</param-name>
-   	<param-value>true</param-value>
-   </init-param>
-</servlet>
-<servlet-mapping>
-	<servlet-name>javax.ws.rs.core.Application</servlet-name>        
-	<url-pattern>/webservices/*</url-pattern>
-</servlet-mapping>
 
     <!-- Sample authorization rule. Use Security Tab to add new rules-->
     <!--
@@ -37,12 +23,8 @@
         </security-constraint>
     -->
     <login-config>
-        <auth-method>FORM</auth-method>
+        <auth-method>BASIC</auth-method>
         <realm-name>file</realm-name>
-        <form-login-config>
-            <form-login-page>/index.jsp</form-login-page>
-            <form-error-page>/error.html</form-error-page>
-        </form-login-config>
     </login-config>
 
     <security-role>
