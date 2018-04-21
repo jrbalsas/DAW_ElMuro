@@ -44,6 +44,7 @@ class MuroController {
                     this.visualizaMensajes(mensajes);
                 })
                 .catch( jqxhr => {
+                    //Network error
                     console.log('Error al recuperar los mensajes');
                     console.log(jqxhr);                    
                 });
@@ -68,17 +69,26 @@ class MuroController {
                         'accept': 'application/JSON' 
                     }
                 })
-                .then( response  => {                    
-                    let $iMensaje=$('[name=mensaje]');
-                    $iMensaje.val("");
-                    $iMensaje.focus();
-                    $('#idErrores').html(""); //clean previous error message
-                    this.cargaMensajes();
+                .then( response  => {
+                    if (response.ok) {
+                        let $iMensaje=$('[name=mensaje]');
+                        $iMensaje.val("");
+                        $iMensaje.focus();
+                        $('#idErrores').html(""); //clean previous error message
+                        this.cargaMensajes();
+                        return;
+                    }
+                    // Get bean-validation errors
+                    return response.json();                    
+                 })
+                .then( errores => {
+                    //show bean-validation errors
+                    console.log(errores);
+                    $('#idErrores').html(errores[0].message);
                 })
-                .catch(function (jqxhr) {                 
-                    console.log(jqxhr);
-                    var err=jqxhr.responseJSON;
-                    $('#idErrores').html(err[0].message);
+                .catch ( err => {
+                    //Network error
+                    console.log(err);
                 });
 
     }
