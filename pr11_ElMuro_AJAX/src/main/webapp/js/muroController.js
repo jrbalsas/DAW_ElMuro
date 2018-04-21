@@ -3,6 +3,7 @@
 
 $(() => {
     let muroCtrl= new MuroController();
+    
     muroCtrl.init();
 });
 
@@ -17,6 +18,8 @@ class MuroController {
         };
     }
     init () {
+        //Attach view event-handlers
+        
         $('[name=frmIdentificador]').on('submit', event=> {
             event.preventDefault();
             this.cambiaIdentificador();
@@ -35,7 +38,8 @@ class MuroController {
         $('[name=mensaje]').focus();
     }
     cargaMensajes () {        
-        $.getJSON(this.config.srvUrl)
+            fetch(this.config.srvUrl)
+                .then( response => response.json() )
                 .then( mensajes => {
                     this.visualizaMensajes(mensajes);
                 })
@@ -55,16 +59,17 @@ class MuroController {
             var objMensaje={};
             objMensaje.mensaje=$('[name=mensaje]').val();
             objMensaje.identificador=this.viewModel.identificador;
-            //Client-side validations ¿?
-            $.ajax({
-                url: this.config.srvUrl,                
-                type: "POST",
-                dataType: 'json',                //expected data type
-                contentType: 'application/JSON',
-                data: JSON.stringify(objMensaje)
+
+            fetch(this.config.srvUrl, {
+                    method: 'POST',
+                    body: JSON.stringify(objMensaje),
+                    headers: {
+                        'Content-type': 'application/JSON',
+                        'accept': 'application/JSON' 
+                    }
                 })
-                .then( respuesta => {                    
-                    var $iMensaje=$('[name=mensaje]');
+                .then( response  => {                    
+                    let $iMensaje=$('[name=mensaje]');
                     $iMensaje.val("");
                     $iMensaje.focus();
                     $('#idErrores').html(""); //clean previous error message
