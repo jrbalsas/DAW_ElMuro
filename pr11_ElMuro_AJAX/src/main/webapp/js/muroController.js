@@ -1,60 +1,60 @@
 /** ControladorJS del Muro 
 */
 
-$(function () {
+$(() => {
+    let muroCtrl= new MuroController();
     muroCtrl.init();
 });
 
 //Muro Controller
-var muroCtrl = {
-    config: {
-        srvUrl:  'webservice/muro'
-    },
-    viewModel: {
-        identificador: "Desconocido"
-    },
-    init: function (model) {
-        var self=this;
-        $('[name=frmIdentificador]').on('submit',function (event) {
+class MuroController {
+    constructor () {
+        this.config={
+            srvUrl:  'webservice/muro'
+        };
+        this.viewModel= {
+            identificador: "Desconocido"
+        };
+    }
+    init () {
+        $('[name=frmIdentificador]').on('submit', event=> {
             event.preventDefault();
-            self.cambiaIdentificador();
+            this.cambiaIdentificador();
         });
-        $('[name=frmMensaje]').on('submit',function (event) {
+        $('[name=frmMensaje]').on('submit', event => {
             event.preventDefault();
-            self.enviaMensaje();
+            this.enviaMensaje();
         });        
         $('#idIdentificador').text(this.viewModel.identificador);
         $('[name=identificador]').focus();
         this.cargaMensajes();
-    },
-    cambiaIdentificador: function () {        
+    }
+    cambiaIdentificador () {        
         this.viewModel.identificador=$('[name=identificador]').val();
         $('#idIdentificador').html(this.viewModel.identificador);
         $('[name=mensaje]').focus();
-    },
-    cargaMensajes: function () {        
-        var self = this;
+    }
+    cargaMensajes () {        
         $.getJSON(this.config.srvUrl)
-                .done(function (mensajes) {
-                    self.visualizaMensajes(mensajes);
+                .then( mensajes => {
+                    this.visualizaMensajes(mensajes);
                 })
-                .fail(function (jqxhr) {
+                .catch( jqxhr => {
                     console.log('Error al recuperar los mensajes');
                     console.log(jqxhr);                    
                 });
-    },
-    visualizaMensajes: function (mensajes) {
+    }
+    visualizaMensajes (mensajes) {
         var filas="";
         mensajes.forEach(function (m) {
             filas += "<li>" + m.identificador + ":" + m.mensaje +"</li>";
         });
         $('#idMensajes').html(filas);        
-    },
-    enviaMensaje: function () {   
-            var self=this;
+    }
+    enviaMensaje() {   
             var objMensaje={};
             objMensaje.mensaje=$('[name=mensaje]').val();
-            objMensaje.identificador=self.viewModel.identificador;
+            objMensaje.identificador=this.viewModel.identificador;
             //Client-side validations ¿?
             $.ajax({
                 url: this.config.srvUrl,                
@@ -63,19 +63,20 @@ var muroCtrl = {
                 contentType: 'application/JSON',
                 data: JSON.stringify(objMensaje)
                 })
-                .done(function (respuesta) {                    
+                .then( respuesta => {                    
                     var $iMensaje=$('[name=mensaje]');
                     $iMensaje.val("");
                     $iMensaje.focus();
                     $('#idErrores').html(""); //clean previous error message
-                    self.cargaMensajes();
+                    this.cargaMensajes();
                 })
-                .fail(function (jqxhr) {                 
+                .catch(function (jqxhr) {                 
                     console.log(jqxhr);
                     var err=jqxhr.responseJSON;
                     $('#idErrores').html(err[0].message);
                 });
 
     }
-};
+}
+
 
