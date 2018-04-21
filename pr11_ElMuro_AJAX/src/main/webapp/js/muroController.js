@@ -2,20 +2,17 @@
 */
 
 $(() => {
-    let muroCtrl= new MuroController();
-    
+    //Create and initialize controller    
+    let muroCtrl= new MuroController();    
     muroCtrl.init();
 });
 
 //Muro Controller
 class MuroController {
     constructor () {
-        this.config={
-            srvUrl:  'webservice/muro'
-        };
-        this.viewModel= {
-            identificador: "Desconocido"
-        };
+        this.srvUrl= 'webservice/muro';
+        //view-model
+        this.identificador= "Desconocido";
     }
     init () {
         //Attach view event-handlers
@@ -28,70 +25,72 @@ class MuroController {
             event.preventDefault();
             this.enviaMensaje();
         });        
-        $('#idIdentificador').text(this.viewModel.identificador);
+        
+        $('#idIdentificador').text(this.identificador);
         $('[name=identificador]').focus();
         this.cargaMensajes();
     }
     cambiaIdentificador () {        
-        this.viewModel.identificador=$('[name=identificador]').val();
-        $('#idIdentificador').html(this.viewModel.identificador);
+        this.identificador=$('[name=identificador]').val();
+        $('#idIdentificador').html(this.identificador);
         $('[name=mensaje]').focus();
     }
     cargaMensajes () {        
-            fetch(this.config.srvUrl)
-                .then( response => response.json() )
-                .then( mensajes => {
-                    this.visualizaMensajes(mensajes);
-                })
-                .catch( jqxhr => {
-                    //Network error
-                    console.log('Error al recuperar los mensajes');
-                    console.log(jqxhr);                    
-                });
+        fetch(this.srvUrl)
+            .then( response => response.json() )
+            .then( mensajes => {
+                this.visualizaMensajes(mensajes);
+            })
+            .catch( jqxhr => {
+                //Network error
+                console.log('Error al recuperar los mensajes');
+                console.log(jqxhr);                    
+            });
     }
     visualizaMensajes (mensajes) {
-        var filas="";
-        mensajes.forEach(function (m) {
-            filas += "<li>" + m.identificador + ":" + m.mensaje +"</li>";
+        let filas="";
+        mensajes.forEach( m => {
+            filas += `<li> ${m.identificador} : ${m.mensaje}</li>`;	
         });
         $('#idMensajes').html(filas);        
     }
     enviaMensaje() {   
-            var objMensaje={};
-            objMensaje.mensaje=$('[name=mensaje]').val();
-            objMensaje.identificador=this.viewModel.identificador;
+        let objMensaje={};
+        objMensaje.mensaje=$('[name=mensaje]').val();
+        objMensaje.identificador=this.identificador;
 
-            fetch(this.config.srvUrl, {
-                    method: 'POST',
-                    body: JSON.stringify(objMensaje),
-                    headers: {
-                        'Content-type': 'application/JSON',
-                        'accept': 'application/JSON' 
-                    }
-                })
-                .then( response  => {
-                    if (response.ok) {
-                        let $iMensaje=$('[name=mensaje]');
-                        $iMensaje.val("");
-                        $iMensaje.focus();
-                        $('#idErrores').html(""); //clean previous error message
-                        this.cargaMensajes();
-                        return;
-                    }
-                    // Get bean-validation errors
-                    return response.json();                    
-                 })
-                .then( errores => {
-                    //show bean-validation errors
+        fetch(this.srvUrl, {
+                method: 'POST',
+                body: JSON.stringify(objMensaje),
+                headers: {
+                    'Content-type': 'application/JSON',
+                    'accept': 'application/JSON' 
+                }
+            })
+            .then( response  => {
+                if (response.ok) {
+                    let $iMensaje=$('[name=mensaje]');
+                    $iMensaje.val("");
+                    $iMensaje.focus();
+                    $('#idErrores').html(""); //clean previous error message
+                    this.cargaMensajes();
+                    return;
+                }  
+                // Get bean-validation errors
+                return response.json();                    
+             })
+            .then( errores => {
+                //show bean-validation errors
+                if (errores) {
                     console.log(errores);
                     $('#idErrores').html(errores[0].message);
-                })
-                .catch ( err => {
-                    //Network error
-                    console.log(err);
-                });
-
-    }
+                }
+            })
+            .catch ( err => {
+                //Network error
+                console.log(err);
+            });
+    }// enviaMensajes()
 }
 
 
