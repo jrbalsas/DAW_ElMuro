@@ -1,95 +1,103 @@
 /** ControladorJS del Muro 
-*/
+ */
 
 $(() => {
     //Create and initialize controller    
-    let muroCtrl= new MuroController();    
+    let muroCtrl = new MuroController();
     muroCtrl.init();
 });
 
 //Muro Controller
 class MuroController {
-    constructor () {
-        this.srvUrl= 'webservice/muro';
+    constructor() {
+        this.srvUrl = 'webservice/muro';
         //view-model
-        this.identificador= "Desconocido";
+        this.identificador = "Desconocido";
     }
-    init () {
+    init() {
         //Attach view event-handlers
-        
-        $('[name=frmIdentificador]').on('submit', event=> {
+
+        $('[name=frmIdentificador]').on('submit', event => {
             event.preventDefault();
             this.cambiaIdentificador();
         });
         $('[name=frmMensaje]').on('submit', event => {
             event.preventDefault();
             this.enviaMensaje();
-        });        
-        
+        });
+        //Show initial information
         $('#idIdentificador').text(this.identificador);
         $('[name=identificador]').focus();
         this.cargaMensajes();
     }
-    cambiaIdentificador () {        
-        this.identificador=$('[name=identificador]').val();
+    cambiaIdentificador() {
+        this.identificador = $('[name=identificador]').val();
         $('#idIdentificador').html(this.identificador);
         $('[name=mensaje]').focus();
     }
-    cargaMensajes () {        
+    cargaMensajes() {
         fetch(this.srvUrl)
-            .then( response => response.json() )
-            .then( mensajes => {
-                this.visualizaMensajes(mensajes);
-            })
-            .catch( jqxhr => {
-                //Network error
-                console.log('Error al recuperar los mensajes');
-                console.log(jqxhr);                    
-            });
+                .then(response => response.json())
+                .then( mensajes => {
+                    this.visualizaMensajes(mensajes);
+                })
+                .catch( () => {
+                    //Network error
+                    $('#idErrores').html("Error en conexión");
+                    console.error("Error en conexión");
+                });
     }
-    visualizaMensajes (mensajes) {
-        let filas="";
-        mensajes.forEach( m => {
-            filas += `<li> ${m.identificador} : ${m.mensaje}</li>`;	
+    visualizaMensajes(mensajes) {
+        let filas = "";
+        mensajes.forEach(m => {
+            filas += `<li> ${m.identificador} : ${m.mensaje}</li>`;
         });
-        $('#idMensajes').html(filas);        
+        $('#idMensajes').html(filas);
     }
-    enviaMensaje() {   
-        let objMensaje={};
-        objMensaje.mensaje=$('[name=mensaje]').val();
-        objMensaje.identificador=this.identificador;
+
+    enviaMensaje() {
+        let objMensaje = {
+            mensaje: $('[name=mensaje]').val(),
+            identificador: this.identificador
+        }
+
+        let enviado = false;
 
         fetch(this.srvUrl, {
-                method: 'POST',
-                body: JSON.stringify(objMensaje),
-                headers: {
-                    'Content-type': 'application/JSON',
-                    'accept': 'application/JSON' 
-                }
-            })
-            .then( response  => {
-                if (response.ok) {
-                    let $iMensaje=$('[name=mensaje]');
-                    $iMensaje.val("");
-                    $iMensaje.focus();
-                    $('#idErrores').html(""); //clean previous error message
-                    this.cargaMensajes();
-                    return;
-                }  
-                // Get bean-validation errors
-                return response.json();                    
-             })
-            .then( errores => {
+            method: 'POST',
+            body: JSON.stringify(objMensaje),
+            headers: {
+                'Content-type': 'application/JSON',
+                'accept': 'application/JSON'
+            }
+        })
+        .then( response => {
+            if (response.ok) {
+                enviado = true;
+            }
+            return response.json()
+        })
+        .then( msgs => {
+            if (enviado == true) {
+                console.log("Mensaje enviado")
+                //Clean input and error messages
+                let $iMensaje = $('[name=mensaje]');
+                $iMensaje.val("");
+                $iMensaje.focus();
+                $('#idErrores').html("");
+                //Reload messages
+                this.cargaMensajes();
+            } else {
                 //show bean-validation errors
-                if (errores) {
-                    console.log(errores);
-                    $('#idErrores').html(errores[0].message);
-                }
-            })
-            .catch ( err => {
-                //Network error
-                console.log(err);
-            });
+                console.warn(msgs)
+                $('#idErrores').html(msgs[0].message);
+            }
+        })
+        .catch( () => {
+            //Network error
+            $('#idErrores').html("Error en conexión");
+            console.error("Error en conexión");
+        })
     }// enviaMensajes()
 }
 

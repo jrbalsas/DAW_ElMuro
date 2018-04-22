@@ -14,6 +14,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 @Path("/muro")
 @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
@@ -33,8 +34,9 @@ public class MuroRESTService {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON + ";charset=utf-8")
-    public void nuevoMensaje(@Valid Mensaje m) {
-        mensajesDAO.nuevoMensaje(m);        
+    public Response nuevoMensaje(@Valid Mensaje m) {
+        mensajesDAO.nuevoMensaje(m);
+        return Response.ok(m).build();
     }
 
 }
