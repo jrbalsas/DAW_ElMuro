@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <title>Mensajes</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+        <script src="js/clientesapp.js"></script>
+        <style>form .ng-invalid { color: red; } </style>
+    </head>
+    <body data-ng-app="clientesApp" data-ng-controller="ClientesController as $ctrl">
+
+        <a href="index.html">Volver</a>
+        <h1> Lista de clientes</h1>
+        <table>
+            <tr><td>Nombre</td><td>DNI</td><td>Socio</td></tr>
+            <tr data-ng-repeat="c in $ctrl.listaclientes" 
+                data-ng-click="$ctrl.visualiza(c)" >
+                <td>{{c.nombre}}</td> <td>{{c.dni}}</td>
+                <td>{{c.socio}}</td>
+            </tr>
+        </table>
+        <blockquote data-ng-show="$ctrl.cliente.nombre.length > 0">
+            <h2>{{$ctrl.cliente.nombre}}</h2>
+            <p>DNI: {{$ctrl.cliente.dni}}</p>
+            <p>{{($ctrl.cliente.socio?'SÍ':'NO')}} es socio</p>
+        </blockquote>
+        <div>
+            <h2>Añadir usuario</h2>
+            <form novalidate name="frClientes" data-ng-submit="$ctrl.enviaCliente()">
+                <fieldset>
+                    <legend>Datos del usuario</legend>
+                    <label>Nombre:<input data-ng-model="$ctrl.nuevoCliente.nombre" 
+                                         name="nombre" data-ng-minlength="3"
+                                         data-ng-maxlength="25"
+                                         ></label>
+                    <span data-ng-show="frClientes.nombre.$invalid && frClientes.nombre.$dirty">
+                        La longitud no es correcta</span>
+                    <label>Dni: <input data-ng-model="$ctrl.nuevoCliente.dni" 
+                                       name="dni" data-ng-pattern="/^\d{7,8}(-?[a-z])?$/i"></label>
+                    <span data-ng-show="frClientes.dni.$invalid && frClientes.dni.$dirty">
+                        El DNI no tiene el formato correcto</span>
+
+                    <label>¿Es socio?<input type="checkbox" 
+                                            data-ng-model="$ctrl.nuevoCliente.socio" name="esSocio"></label>
+                </fieldset>
+                <input type="submit" name="enviar" value="Enviar" data-ng-disabled="frClientes.nombre.$invalid || frClientes.dni.$invalid || frClientes.$pristine">
+                <input type="reset"  name="limpiar" value="Limpiar">
+            </form>
+        </div>
+    </body>
+</html>
