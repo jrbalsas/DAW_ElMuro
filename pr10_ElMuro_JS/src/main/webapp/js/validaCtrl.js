@@ -1,9 +1,12 @@
+/*View controller with old literal object pattern */
+
+
 $(function () {
-      ctrl.init();
+      ctrl.init(); //attach view-event handlers
   });
 
 var ctrl={
-      config: {
+      vm: { //view-model
           idni:"[name=dni]",
           btDNI:"#btDNI",                   
           salida:"#mensaje",
@@ -11,22 +14,22 @@ var ctrl={
       },
       init: function () {
           var self=this; //that=this
-          $(this.config.btDNI).on('click',function () {
+          $(this.vm.btDNI).on('click',function () {
               self.validaDNI();
           });                  
           console.log("controlador inicializado");
       },
       validaDNI: function () {
-              var dni=$(this.config.idni).val().trim();
+              var dni=$(this.vm.idni).val().trim();
               var mensaje="Tu dni "+dni;
-              if (this.config.ERdni.test(dni)) {
+              if (this.vm.ERdni.test(dni)) {
 
                   mensaje+= " es correcto";
                   console.log("Se ha aceptado el dni %s",dni);
               }else {
                   mensaje+= " es incorrecto";
               }
-              $(this.config.salida).text(mensaje);                   
+              $(this.vm.salida).text(mensaje);                   
       }
 
   }

@@ -29,7 +29,7 @@
                 JS basado en patrón objeto literal</li>                
             <%-- If used as login form, not show link to resource --%>
         <c:if test="${empty pageContext.request.getAttribute('javax.servlet.forward.servlet_path')}">
-            <li><a href="muro">Acceso al muro (con validación de mensaje en cliente)</a></li>
+            <li><a href="muro">Acceso al muro</a> controlador JS con clase ES6 para validación en cliente</li>
         </c:if>
         </ul>
 

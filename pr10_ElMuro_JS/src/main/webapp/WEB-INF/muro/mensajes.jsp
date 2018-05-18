@@ -12,7 +12,6 @@
     </head>
     <body>
         <h1>Muro de ${identificador}</h1>
-        <p>Validación de mensajes en cliente: sólo entre 2 y 25 caractéres</p>
         <h2>Mensajes</h2>
         <ul>
             <c:forEach var="m" items="${mensajes}">
