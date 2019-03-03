@@ -1,5 +1,5 @@
 
-package com.daw.muro.model;
+package com.daw.muro.pr05.model;
 
 import java.io.Serializable;
 

@@ -1,8 +1,8 @@
-package com.daw.muro;
+package com.daw.muro.pr05;
 
-import com.daw.muro.model.MensajesDAO;
-import com.daw.muro.model.Mensaje;
-import com.daw.muro.model.Preferencias;
+import com.daw.muro.pr05.model.MensajesDAO;
+import com.daw.muro.pr05.model.Mensaje;
+import com.daw.muro.pr05.model.Preferencias;
 import java.io.IOException;
 import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
