@@ -1,5 +1,6 @@
 package com.daw.muro.pr06.model;
 
+import com.daw.muro.pr06.model.qualifiers.DAOJdbc;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,7 +22,7 @@ public class MensajeDAOJDBC implements MensajeDAO{
 
     private Logger logger=Logger.getLogger(MensajeDAOJDBC.class.getName());
     
-    @Resource(name = "java:global/jdbc/muro")
+    @Resource(lookup = "java:app/jdbc/muro")
     private DataSource ds;
     
     public MensajeDAOJDBC ()  {

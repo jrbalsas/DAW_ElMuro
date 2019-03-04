@@ -13,7 +13,7 @@ import javax.inject.Named;
  *
  * @author admin
  */
-@Named(value = "prefs")
+@Named(value = "prefs") //Allows access from views
 @SessionScoped
 public class Preferencias implements Serializable{
     private String usuario="";

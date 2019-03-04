@@ -5,6 +5,7 @@
  */
 package com.daw.muro.pr06.model;
 
+import com.daw.muro.pr06.model.qualifiers.DAOList;
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;

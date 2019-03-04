@@ -1,9 +1,11 @@
 package com.daw.muro.pr06;
 
-import com.daw.muro.pr06.model.DAOList;
+import com.daw.muro.pr06.model.qualifiers.DAOJdbc;
+import com.daw.muro.pr06.model.qualifiers.DAOList;
 import com.daw.muro.pr06.model.MensajeDAOList;
 import com.daw.muro.pr06.model.Mensaje;
 import com.daw.muro.pr06.model.MensajeDAO;
+import com.daw.muro.pr06.model.MensajeDAOJDBC;
 import com.daw.muro.pr06.model.Preferencias;
 import java.io.IOException;
 import java.util.Set;
@@ -21,6 +23,7 @@ import javax.validation.Validator;
 public class MuroController extends HttpServlet {
 
     @Inject
+    //@DAOJdbc  //Choose DAO implementation
     @DAOList
     private MensajeDAO mensajes;
     
