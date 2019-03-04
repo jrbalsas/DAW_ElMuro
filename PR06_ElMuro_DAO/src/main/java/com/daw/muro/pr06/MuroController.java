@@ -1,7 +1,9 @@
 package com.daw.muro.pr06;
 
-import com.daw.muro.pr06.model.MensajesDAO;
+import com.daw.muro.pr06.model.DAOList;
+import com.daw.muro.pr06.model.MensajeDAOList;
 import com.daw.muro.pr06.model.Mensaje;
+import com.daw.muro.pr06.model.MensajeDAO;
 import com.daw.muro.pr06.model.Preferencias;
 import java.io.IOException;
 import java.util.Set;
@@ -19,12 +21,14 @@ import javax.validation.Validator;
 public class MuroController extends HttpServlet {
 
     @Inject
-    private MensajesDAO mensajes;
+    @DAOList
+    private MensajeDAO mensajes;
+    
     @Inject
     private Preferencias preferencias;
 
     @Inject
-    private Validator validator;  //Dependency injection
+    private Validator validator;  
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -45,6 +49,7 @@ public class MuroController extends HttpServlet {
             rd = request.getRequestDispatcher("/WEB-INF/muro/identificador.jsp");
         } else {
             //El usuario ya tiene nombre asignado: mostrar mensajes
+            request.setAttribute("mensajes", mensajes.buscaTodos());
             rd = request.getRequestDispatcher("/WEB-INF/muro/mensajes.jsp");
         }
         //Pasar el control a la vista
@@ -69,7 +74,7 @@ public class MuroController extends HttpServlet {
 
         if (nuevoMensaje != null) {
             identificador = preferencias.getUsuario();
-            Mensaje m = new Mensaje(identificador, nuevoMensaje);
+            Mensaje m = new Mensaje(0, identificador, nuevoMensaje);
 
             Set<ConstraintViolation<Mensaje>> errores = validator.validate(m);
 
@@ -80,7 +85,8 @@ public class MuroController extends HttpServlet {
             } else {
                 //Mensaje incorrecto, generar vista de mensajes con mensaje original y mensaje de error
                 request.setAttribute("mensaje", nuevoMensaje);
-
+                request.setAttribute("mensajes", mensajes.buscaTodos());
+                
                 for (ConstraintViolation<Mensaje> error : errores) {
                     //Pass generated errors to view
                     request.setAttribute("err" + error.getPropertyPath(),

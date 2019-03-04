@@ -13,4 +13,20 @@
         <error-code>404</error-code>
         <location>/not_found.html</location>
     </error-page>
+    <!-- Creation of Datasource in Application Server -->
+    <!--
+        <data-source>
+            <name>java:global/jdbc/muro</name>
+            <class-name>org.apache.derby.jdbc.ClientConnectionPoolDataSource</class-name>        
+            <server-name>localhost</server-name>
+            <port-number>1527</port-number>
+            <database-name>muro</database-name>
+            <user>dawuser1</user>
+            <password>dawuser1</password>                                
+            <initial-pool-size>2</initial-pool-size>
+            <max-pool-size>10</max-pool-size>
+            <min-pool-size>5</min-pool-size>
+        </data-source>
+    -->
+
 </web-app>

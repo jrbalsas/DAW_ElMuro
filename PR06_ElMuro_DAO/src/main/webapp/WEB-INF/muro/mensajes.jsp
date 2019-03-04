@@ -12,7 +12,7 @@
         <h1>Muro de ${prefs.usuario}</h1>
         <h2>Mensajes</h2>
         <ul class="list-group">
-            <c:forEach var="m" items="${muro.mensajes}">
+            <c:forEach var="m" items="${mensajes}">
                 <li class="list-group-item"><strong>${fn:escapeXml(m.identificador)}:</strong> ${fn:escapeXml(m.mensaje)}</li>
             </c:forEach>
         </ul>

@@ -16,19 +16,21 @@ import javax.inject.Named;
  */
 @Named(value="muro")
 @ApplicationScoped
-public class MensajesDAO {
+@DAOList
+public class MensajeDAOList implements MensajeDAO{
     private List<Mensaje> mensajes;
 
-    public MensajesDAO() {
+    public MensajeDAOList() {
         mensajes=new ArrayList<>();
-        mensajes.add(new Mensaje("pepe","Hola"));
-        mensajes.add(new Mensaje("ana","¿Qué tal?"));
-        mensajes.add(new Mensaje("pepe","Mola"));
+        mensajes.add(new Mensaje(1, "pepe","Hola"));
+        mensajes.add(new Mensaje(2, "ana","¿Qué tal?"));
+        mensajes.add(new Mensaje(3, "pepe","Mola"));
     }
-    public void nuevoMensaje(Mensaje m) {
+    public boolean nuevoMensaje(Mensaje m) {
         mensajes.add(m);
+        return true;
     }
-    public List<Mensaje> getMensajes() {
+    public List<Mensaje> buscaTodos() {
         return mensajes;
     }
     

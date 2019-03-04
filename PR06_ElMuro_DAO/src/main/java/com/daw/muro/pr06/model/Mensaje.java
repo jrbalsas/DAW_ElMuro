@@ -5,6 +5,9 @@ import java.io.Serializable;
 import javax.validation.constraints.Size;
 
 public class Mensaje implements Serializable{
+
+    Integer id;
+    
     private String identificador;
     @Size(min=2,max=25, message="La longitud del nombre debe estar entre {min} y {max} caracteres")
     private String mensaje;
@@ -13,9 +16,17 @@ public class Mensaje implements Serializable{
         identificador="Desconocido";
         mensaje="";
     }
-    public Mensaje (String id, String men) {
-        identificador=id;
-        mensaje=men;
+    public Mensaje (Integer id, String identif, String mens) {
+        identificador=identif;
+        mensaje=mens;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     
