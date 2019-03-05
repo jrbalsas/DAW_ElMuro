@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.daw.muro.pr05.model;
 
 import java.util.ArrayList;
@@ -14,12 +10,11 @@ import javax.inject.Named;
  *
  * @author admin
  */
-@Named(value="muro")
 @ApplicationScoped
-public class MensajesDAO {
+public class MensajesList {
     private List<Mensaje> mensajes;
 
-    public MensajesDAO() {
+    public MensajesList() {
         mensajes=new ArrayList<>();
         mensajes.add(new Mensaje("pepe","Hola"));
         mensajes.add(new Mensaje("ana","¿Qué tal?"));

@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.daw.muro.pr05.model;
 
 import java.io.Serializable;
@@ -13,7 +9,7 @@ import javax.inject.Named;
  *
  * @author admin
  */
-@Named(value = "prefs")
+@Named(value = "prefs") //Allows access from views
 @SessionScoped
 public class Preferencias implements Serializable{
     private String usuario="";
