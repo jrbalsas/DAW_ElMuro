@@ -15,7 +15,6 @@ import javax.inject.Named;
  *
  * @author admin
  */
-@Named(value="muro")
 @ApplicationScoped
 @DAOList
 public class MensajeDAOList implements MensajeDAO{
