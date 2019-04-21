@@ -1,0 +1,22 @@
+<h1>Muro de <span id="idIdentificador" ng-bind='$ctrl.identificador'></span></h1>
+<div ng-if='$ctrl.identificador!=""'>
+<h2>Mensajes</h2>
+    <mensajes datos='$ctrl.mensajes'></mensajes>
+<div class="text-danger" id="idErrores" >
+    <!-- Mensajes de error -->
+    <p ng-repeat='e in $ctrl.errorMsgs' class='text-alert'>{{e.message}}</p>
+</div>
+<form name="frmMensaje" ng-submit='$ctrl.enviaMensaje()'>
+    <input type="text" ng-model='$ctrl.mensaje.mensaje' name="mensaje"  placeholder="Mensaje" class="form-control">
+    <input type="submit"  name="Enviar" class="form-control">
+</form>
+</div>
+<h2>Cambiar el identificador</h2>
+<form novalidate name="frmIdentificador" ng-submit='$ctrl.cambiaIdentificador()'>
+    <input type="text" data-ng-pattern='/^\w{1,10}$/' required ng-model='$ctrl.nuevoIdentificador' name="identificador"  placeholder="Identificador" class="form-control">
+    <input type="submit"  data-ng-disabled='frmIdentificador.$invalid'
+        name="Nuevo Identificador" class="form-control">
+    <span class="ng-invalid" data-ng-show='frmIdentificador.identificador.$dirty && frmIdentificador.identificador.$invalid '>
+          El identificador debe tener caracteres válidos entre 1 y 10 caracteres
+    </span>
+</form>
